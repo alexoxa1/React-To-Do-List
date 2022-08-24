@@ -1,13 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TodoList from './TodoList'
 
 export default function App() {
-  const [todos, setTodos] = useState([
-      {id: 1, title: 'First todo', completed: false},
-      {id: 2, title: 'Second todo', completed: true},
-  ])
-
+  const [todos, setTodos] = useState([])
   const [todoTitle, setTodoTitle] = useState("");
+
+  const handleClilck = () => console.log("clilck");
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("todos") || []
+      setTodos(JSON.parse(raw))
+    } catch (err) {
+      // 👇️ SyntaxError: Unexpected end of JSON input
+      console.log('error', err);
+    }
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener("click", handleClilck)
+    localStorage.setItem("todos", JSON.stringify(todos));
+    return () => {
+      document.removeEventListener("click", handleClilck);
+    }
+  }, [todos])
 
   const addTodo = event => {
     if (event.key === "Enter") {
