@@ -12,18 +12,20 @@ export default function App() {
   }, [state])
 
   const addTodo = event => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && todoTitle.length > 0) {
       dispatch({
         type: "add",
         payload: todoTitle,
       })
       setTodoTitle("");
-    } else if(event.type === "click") {
+    } else if(event.type === "click" && todoTitle.length > 0) {
       dispatch({
         type: "add",
         payload: todoTitle,
       })
       setTodoTitle("");     
+    } else {
+      alert("Empty field")
     }
   }
 
