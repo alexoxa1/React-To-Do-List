@@ -24,8 +24,6 @@ export default function App() {
         payload: todoTitle,
       })
       setTodoTitle("");     
-    } else {
-      alert("Empty field")
     }
   }
 
